@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindWell AI - Mental Wellness Companion</title>
+    <meta name="description" content="AI-powered mental wellness companion with real-time emotion recognition and personalized wellness recommendations">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="mindwell-logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h1>MindWell AI</h1>
+            </div>
+            <div class="loading-spinner"></div>
+            <p>Initializing your wellness companion...</p>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <i class="fas fa-brain"></i>
+                <span>MindWell AI</span>
+            </div>
+            <div class="nav-links">
+                <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#camera" class="nav-link" data-section="camera">
+                    <i class="fas fa-camera"></i>
+                    <span>Emotion Scan</span>
+                </a>
+                <a href="#chat" class="nav-link" data-section="chat">
+                    <i class="fas fa-comments"></i>
+                    <span>AI Chat</span>
+                </a>
+                <a href="#analytics" class="nav-link" data-section="analytics">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#settings" class="nav-link" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+            <div class="nav-user">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section active">
+            <div class="section-header">
+                <h1>Welcome to MindWell AI</h1>
+                <p>Your personal mental wellness companion</p>
+            </div>
+            
+            <div class="dashboard-grid">
+                <!-- Current Mood Card -->
+                <div class="dashboard-card mood-card">
+                    <div class="card-header">
+                        <h3>Current Mood</h3>
+                        <div class="mood-indicator" id="current-mood">
+                            <i class="fas fa-smile"></i>
+                            <span>Happy</span>
+                        </div>
+                    </div>
+                    <div class="mood-visualization">
+                        <canvas id="mood-chart" width="200" height="100"></canvas>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="dashboard-card quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="openEmotionScan()">
+                            <i class="fas fa-camera"></i>
+                            <span>Scan Emotion</span>
+                        </button>
+                        <button class="action-btn" onclick="openChat()">
+                            <i class="fas fa-comments"></i>
+                            <span>Chat with AI</span>
+                        </button>
+                        <button class="action-btn" onclick="logMood()">
+                            <i class="fas fa-plus"></i>
+                            <span>Log Mood</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Wellness Tips -->
+                <div class="dashboard-card wellness-tips">
+                    <h3>Today's Wellness Tip</h3>
+                    <div class="tip-content" id="daily-tip">
+                        <p>Take a moment to breathe deeply and appreciate three good things in your life today.</p>
+                    </div>
+                </div>
+
+                <!-- Mood Tracker -->
+                <div class="dashboard-card mood-tracker">
+                    <h3>Mood Tracker</h3>
+                    <div class="mood-calendar" id="mood-calendar">
+                        <!-- Calendar will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Progress Overview -->
+                <div class="dashboard-card progress-overview">
+                    <h3>Your Progress</h3>
+                    <div class="progress-stats">
+                        <div class="stat">
+                            <span class="stat-number" id="total-days">7</span>
+                            <span class="stat-label">Days Tracked</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="positive-days">5</span>
+                            <span class="stat-label">Positive Days</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" id="streak-days">3</span>
+                            <span class="stat-label">Day Streak</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Camera Section -->
+        <section id="camera" class="content-section">
+            <div class="section-header">
+                <h1>Real-Time Emotion Scan</h1>
+                <p>Let AI analyze your emotions from your camera feed</p>
+            </div>
+            
+            <div class="camera-container">
+                <div class="camera-preview">
+                    <video id="camera-video" autoplay muted></video>
+                    <canvas id="emotion-overlay" width="640" height="480"></canvas>
+                    <div class="emotion-display" id="emotion-display">
+                        <div class="emotion-icon">
+                            <i class="fas fa-smile"></i>
+                        </div>
+                        <div class="emotion-text">
+                            <span id="detected-emotion">Detecting...</span>
+                            <span id="confidence">0%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="camera-controls">
+                    <button class="control-btn" id="start-camera">
+                        <i class="fas fa-play"></i>
+                        Start Camera
+                    </button>
+                    <button class="control-btn" id="stop-camera">
+                        <i class="fas fa-stop"></i>
+                        Stop Camera
+                    </button>
+                    <button class="control-btn" id="capture-mood">
+                        <i class="fas fa-camera"></i>
+                        Capture Mood
+                    </button>
+                </div>
+                
+                <div class="camera-info">
+                    <div class="info-card">
+                        <h4>Today's Emotions</h4>
+                        <div class="emotion-summary" id="today-emotions">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h4>Recommendations</h4>
+                        <div class="recommendations" id="emotion-recommendations">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chat Section -->
+        <section id="chat" class="content-section">
+            <div class="section-header">
+                <h1>AI Wellness Assistant</h1>
+                <p>Chat with our AI for personalized mental wellness support</p>
+            </div>
+            
+            <div class="chat-container">
+                <div class="chat-messagesI have created the backend core components: main FastAPI app, emotion detector, chatbot, and mood analytics modules.
+
+Next, I will start building the frontend with a modern, responsive UI featuring real-time camera feed, emotion visualization, chatbot interface, and mood tracking charts.
+
+<create_file>
+<path>mindwell-ai/frontend/index.html</path>
+<content>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MindWell AI - Mental Wellness Companion</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+    <header>
+        <h1>MindWell AI</h1>
+        <p>Your AI-powered mental wellness companion</p>
+    </header>
+
+    <main>
+        <section id="camera-section">
+            <h2>Real-Time Emotion Recognition</h2>
+            <video id="video" autoplay muted playsinline></video>
+            <canvas id="overlay"></canvas>
+            <div id="emotion-info">
+                <p>Detected Emotion: <span id="emotion">-</span></p>
+                <p>Confidence: <span id="confidence">-</span></p>
+            </div>
+        </section>
+
+        <section id="chatbot-section">
+            <h2>Wellness Chatbot</h2>
+            <div id="chat-window">
+                <div id="chat-messages"></div>
+                <form id="chat-form">
+                    <input type="text" id="chat-input" placeholder="Ask me anything about your wellness..." autocomplete="off" />
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="mood-tracking-section">
+            <h2>Mood Tracking Dashboard</h2>
+            <canvas id="mood-chart"></canvas>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2024 MindWell AI. All rights reserved.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/camera.js"></script>
+    <script src="js/emotion-chart.js"></script>
+    <script src="js/chatbot.js"></script>
+</body>
+</html>
