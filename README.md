@@ -102,18 +102,11 @@ python -m http.server 8080
 
 ---
 
-## Screenshots
 
-*(Add screenshots here showing the dashboard, emotion scan, chatbot, and analytics)*
 
----
-
-## License
-
-MIT License
 
 ---
 
 ## Contact
 
-For questions or contributions, please contact [Your Name] at [your.email@example.com].
+For questions or contributions, please contact mohameddrefaee6@gmail
